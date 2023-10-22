@@ -23,12 +23,10 @@ struct Screenshot
     }
 };
 
-// Screenshot screenshot;
+Screenshot screenshot{};
 
 static PyObject *method_take(PyObject *self, PyObject *args)
 {
-    Display *display = XOpenDisplay(NULL);
-    Window root = DefaultRootWindow(display);
 
     int xx, yy, W, H;
     unsigned char *data;
@@ -39,13 +37,14 @@ static PyObject *method_take(PyObject *self, PyObject *args)
         return NULL;
     }
 
-    // PySys_WriteStdout("%s\n", std::to_string(xx).c_str());
-    // PySys_WriteStdout("%s\n", std::to_string(yy).c_str());
-    // PySys_WriteStdout("%s\n", std::to_string(W).c_str());
-    // PySys_WriteStdout("%s\n", std::to_string(H).c_str());
-    // PySys_WriteStdout("%s\n", std::to_string(count).c_str());
+    // PySys_WriteStdout("%d\n", xx);
+    // PySys_WriteStdout("%d\n", screenshot.test);
+    // PySys_WriteStdout("%d\n", yy);
+    // PySys_WriteStdout("%d\n", W);
+    // PySys_WriteStdout("%d\n", H);
+    // PySys_WriteStdout("%ld\n", count);
 
-    XImage *image = XGetImage(display, root, xx, yy, W, H, AllPlanes, ZPixmap);
+    XImage *image = XGetImage(screenshot.display, screenshot.root, xx, yy, W, H, AllPlanes, ZPixmap);
 
     unsigned long red_mask = image->red_mask;
     unsigned long green_mask = image->green_mask;
@@ -70,8 +69,6 @@ static PyObject *method_take(PyObject *self, PyObject *args)
     }
 
     XDestroyImage(image);
-    XDestroyWindow(display, root);
-    XCloseDisplay(display);
 
     Py_RETURN_NONE;
 }
@@ -90,8 +87,6 @@ static struct PyModuleDef screenshotmodule = {
 PyMODINIT_FUNC PyInit_screenshot(void)
 {
     PyObject *module = PyModule_Create(&screenshotmodule);
-
-    // screenshot = Screenshot();
 
     return module;
 }
