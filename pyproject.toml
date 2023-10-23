@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "screenshot"
+version = "0.0.2"
+requires-python = ">=3.10"
+authors = [
+  { name="Bruno Cabral", email="cabral.brc@gmail.com" },
+]
+license = {text = "MIT License"}
+description = "Python interface for taking a screenshot image"
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+]
